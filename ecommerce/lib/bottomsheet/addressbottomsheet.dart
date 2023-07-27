@@ -22,12 +22,11 @@ class _AddressesBottomSheetWidgetState
   void initState() {
     super.initState();
     fetchAddresses();
-
   }
 
   void fetchAddresses() async {
     final List<Map<String, dynamic>> fetchedAddresses =
-    await AddressDatabase.getAddresses();
+        await AddressDatabase.getAddresses();
     setState(() {
       addresses = fetchedAddresses;
     });
