@@ -2,7 +2,7 @@
 [App Video](https://drive.google.com/file/d/18K-mAA0icT5hZdAei84Ur7b2G318wtR_/view?usp=sharing)
 
 [APK Download
-](https://drive.google.com/file/d/1MkTmHvfv4rpoiIoc1D3oIoAYMz4lZUUA/view?usp=sharing)
+](https://drive.google.com/file/d/1czi8mCUtN_bqNEA_0TjNqmpxXELZt-gD/view?usp=sharing)
 ## Directory Structure
 ```
 
