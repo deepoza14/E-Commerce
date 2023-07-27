@@ -6,6 +6,7 @@ import 'package:ecommerce/database/cart_database.dart';
 import 'package:ecommerce/database/wishlist_database.dart';
 import 'package:ecommerce/screens/homepage.dart';
 import 'package:ecommerce/screens/selectaddress.dart';
+import 'package:ecommerce/screens/wishlist.dart';
 import 'package:ecommerce/theme/color_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -95,12 +96,12 @@ class CartState extends State<Cart> {
           ),
           IconButton(
             onPressed: () {
-              /*Navigator.push(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const WishListScreen(),
                 ),
-              );*/
+              );
             },
             icon: const Icon(Icons.favorite),
             color: Colors.white,
@@ -314,66 +315,62 @@ class CartState extends State<Cart> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.black12,
-                                      width: 1.5,
-                                    ),
-                                    borderRadius: BorderRadius.circular(5),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
                                     color: Colors.black12,
+                                    width: 1.5,
                                   ),
-                                  child: Row(
-                                    children: [
-                                      InkWell(
-                                        onTap: () => quantity == 1
-                                            ? removeItemFromCart()
-                                            : decrementQuantity(),
-                                        child: Container(
-                                          width: 30,
-                                          height: 32,
-                                          alignment: Alignment.center,
-                                          child: Icon(
-                                            quantity == 1
-                                                ? Icons.delete
-                                                : Icons.remove,
-                                            size: 18,
-                                          ),
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Colors.black12,
+                                ),
+                                child: Row(
+                                  children: [
+                                    InkWell(
+                                      onTap: () => quantity == 1
+                                          ? removeItemFromCart()
+                                          : decrementQuantity(),
+                                      child: Container(
+                                        width: 30,
+                                        height: 32,
+                                        alignment: Alignment.center,
+                                        child: Icon(
+                                          quantity == 1
+                                              ? Icons.delete
+                                              : Icons.remove,
+                                          size: 18,
                                         ),
                                       ),
-                                      DecoratedBox(
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Colors.black12,
-                                              width: 1.5),
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(0),
-                                        ),
-                                        child: Container(
-                                          width: 30,
-                                          height: 32,
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            '$quantity',
-                                          ),
+                                    ),
+                                    DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.black12, width: 1.5),
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(0),
+                                      ),
+                                      child: Container(
+                                        width: 30,
+                                        height: 32,
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          '$quantity',
                                         ),
                                       ),
-                                      InkWell(
-                                        onTap: () => incrementQuantity(),
-                                        child: Container(
-                                          width: 30,
-                                          height: 32,
-                                          alignment: Alignment.center,
-                                          child: const Icon(
-                                            Icons.add,
-                                            size: 18,
-                                          ),
+                                    ),
+                                    InkWell(
+                                      onTap: () => incrementQuantity(),
+                                      child: Container(
+                                        width: 30,
+                                        height: 32,
+                                        alignment: Alignment.center,
+                                        child: const Icon(
+                                          Icons.add,
+                                          size: 18,
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
                               Padding(
