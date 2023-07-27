@@ -168,7 +168,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                 const EdgeInsets.only(left: 20),
                                             child: Container(
                                               height: 20,
-                                              width: 50,
+                                              width: 60,
                                               decoration: const BoxDecoration(
                                                 color: Colors.red,
                                                 borderRadius: BorderRadius.all(

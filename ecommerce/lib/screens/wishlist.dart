@@ -206,7 +206,7 @@ class WishListScreenState extends State<WishListScreen> {
                   // Call the delete method of WishlistDatabase here
                   await WishlistDatabase.removeFromWishlist(
                       getWishlistIndex[WishlistDatabase.columnTitle]);
-                  Navigator.pop(context);
+                  if(context.mounted)Navigator.pop(context);
                 },
               ),
             ],

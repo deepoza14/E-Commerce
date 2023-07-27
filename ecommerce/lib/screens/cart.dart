@@ -257,52 +257,55 @@ class CartState extends State<Cart> {
                         Row(
                           children: [
                             imageWidget,
-                            Column(
-                              children: [
-                                Container(
-                                  width: 235,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
-                                  child: Text(
-                                    item['title'],
-                                    style: const TextStyle(
-                                      fontSize: 16,
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 235,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: Text(
+                                      item['title'],
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                    maxLines: 2,
                                   ),
-                                ),
-                                Container(
-                                  width: 235,
-                                  padding:
-                                      const EdgeInsets.only(left: 10, top: 5),
-                                  child: Text(
-                                    '₹${item['price']}',
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
+                                  Container(
+                                    width: 235,
+                                    padding:
+                                        const EdgeInsets.only(left: 10, top: 5),
+                                    child: Text(
+                                      '₹${item['price']}',
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      maxLines: 2,
                                     ),
-                                    maxLines: 2,
                                   ),
-                                ),
-                                Container(
-                                  width: 235,
-                                  padding: const EdgeInsets.only(left: 10),
-                                  child:
-                                      const Text('Eligible for FREE Shipping'),
-                                ),
-                                Container(
-                                  width: 235,
-                                  padding:
-                                      const EdgeInsets.only(left: 10, top: 5),
-                                  child: const Text(
-                                    'In Stock',
-                                    style: TextStyle(
-                                      color: Colors.teal,
+                                  Container(
+                                    width: 235,
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: const Text(
+                                        'Eligible for FREE Shipping'),
+                                  ),
+                                  Container(
+                                    width: 235,
+                                    padding:
+                                        const EdgeInsets.only(left: 10, top: 5),
+                                    child: const Text(
+                                      'In Stock',
+                                      style: TextStyle(
+                                        color: Colors.teal,
+                                      ),
+                                      maxLines: 2,
                                     ),
-                                    maxLines: 2,
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             )
                           ],
                         ),
@@ -311,62 +314,66 @@ class CartState extends State<Cart> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
+                              Expanded(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.black12,
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(5),
                                     color: Colors.black12,
-                                    width: 1.5,
                                   ),
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: Colors.black12,
-                                ),
-                                child: Row(
-                                  children: [
-                                    InkWell(
-                                      onTap: () => quantity == 1
-                                          ? removeItemFromCart()
-                                          : decrementQuantity(),
-                                      child: Container(
-                                        width: 35,
-                                        height: 32,
-                                        alignment: Alignment.center,
-                                        child: Icon(
-                                          quantity == 1
-                                              ? Icons.delete
-                                              : Icons.remove,
-                                          size: 18,
+                                  child: Row(
+                                    children: [
+                                      InkWell(
+                                        onTap: () => quantity == 1
+                                            ? removeItemFromCart()
+                                            : decrementQuantity(),
+                                        child: Container(
+                                          width: 30,
+                                          height: 32,
+                                          alignment: Alignment.center,
+                                          child: Icon(
+                                            quantity == 1
+                                                ? Icons.delete
+                                                : Icons.remove,
+                                            size: 18,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    DecoratedBox(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.black12, width: 1.5),
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(0),
-                                      ),
-                                      child: Container(
-                                        width: 35,
-                                        height: 32,
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          '$quantity',
+                                      DecoratedBox(
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.black12,
+                                              width: 1.5),
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(0),
+                                        ),
+                                        child: Container(
+                                          width: 30,
+                                          height: 32,
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            '$quantity',
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    InkWell(
-                                      onTap: () => incrementQuantity(),
-                                      child: Container(
-                                        width: 35,
-                                        height: 32,
-                                        alignment: Alignment.center,
-                                        child: const Icon(
-                                          Icons.add,
-                                          size: 18,
+                                      InkWell(
+                                        onTap: () => incrementQuantity(),
+                                        child: Container(
+                                          width: 30,
+                                          height: 32,
+                                          alignment: Alignment.center,
+                                          child: const Icon(
+                                            Icons.add,
+                                            size: 18,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                               Padding(
@@ -427,7 +434,7 @@ class CartState extends State<Cart> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Total: ₹${subtotal.toStringAsFixed(2)}"),
+                Expanded(child: Text("Total: ₹${subtotal.toStringAsFixed(2)}")),
                 SizedBox(
                   width: 200,
                   height: 40.0,
@@ -445,13 +452,14 @@ class CartState extends State<Cart> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => const LoginScreen()));
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SelectAddress(),
+                            ),
+                          );
                         }
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SelectAddress(),
-                          ),
-                        );
                       } else {
                         showCartIsEmptyDialog(context);
                       }

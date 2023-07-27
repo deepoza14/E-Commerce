@@ -1,3 +1,4 @@
+import 'package:ecommerce/alert_dialog/failedalert.dart';
 import 'package:ecommerce/database/address_database.dart';
 import 'package:ecommerce/screens/addnewaddress.dart';
 import 'package:ecommerce/screens/update_address.dart';
@@ -208,13 +209,14 @@ class _SavedAddressState extends State<SavedAddress> {
                                                     try {
                                                       await AddressDatabase
                                                           .deleteAddress(index);
-                                                      // Show a confirmation message or update the UI accordingly
-                                                      print(
-                                                          'Address deleted successfully.');
                                                     } catch (e) {
-                                                      // Show an error message or handle the failure
-                                                      print(
-                                                          'Failed to delete the address: $e');
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return const FailedAlertDialog();
+                                                        },
+                                                      );
                                                     }
                                                   },
                                                 ),

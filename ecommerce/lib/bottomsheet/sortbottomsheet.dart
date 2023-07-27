@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SortBottomSheetWidget extends StatefulWidget {
-  final int selectedRowIndex; // Add selectedRowIndex as a parameter
-  final Function(int) onRowTapped; // Add onRowTapped as a parameter
+  final int selectedRowIndex;
+  final Function(int) onRowTapped;
 
   const SortBottomSheetWidget({
     Key? key,

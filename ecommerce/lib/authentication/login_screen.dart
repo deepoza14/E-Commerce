@@ -1,8 +1,8 @@
+import 'package:ecommerce/alert_dialog/failedalert.dart';
 import 'package:ecommerce/model/privacy.dart';
 import 'package:ecommerce/screens/homepage.dart';
 import 'package:ecommerce/theme/color_theme.dart';
 import 'package:ecommerce/theme/textstyle.dart';
-import 'package:ecommerce/widgets/failedalert.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -68,12 +68,12 @@ class _LoginScreenState extends State<LoginScreen> {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('username', username);
         await prefs.setString('password', password);
-        print(response.body);
+        await prefs.setString('login', "login");
         if (context.mounted) {
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const Homepage()),
-            (route) => false,
+                (route) => false,
           );
         }
       } else {
@@ -95,16 +95,17 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> showErrorDialog(String title, String content) {
     return showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(title),
-        content: Text(content),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
+      builder: (context) =>
+          AlertDialog(
+            title: Text(title),
+            content: Text(content),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('OK'),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
@@ -153,14 +154,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: MyColorTheme
-                              .primaryColor, // Set the enabled border color here
+                              .primaryColor,
                         ),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: MyColorTheme
-                              .primaryColor, // Set the focused border color here
+                              .primaryColor,
                         ),
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -224,7 +225,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         setState(() {
                           checkboxValue = value ?? false;
                           checkboxError =
-                              false; // Reset the checkbox error status
+                          false; // Reset the checkbox error status
                         });
                       },
                     ),
@@ -233,18 +234,20 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () {
                           showDialog(
                             context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text('Privacy Policy'),
-                              content: SingleChildScrollView(
-                                child: Text(privacyPolicyText),
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.of(context).pop(),
-                                  child: const Text('OK'),
+                            builder: (context) =>
+                                AlertDialog(
+                                  title: const Text('Privacy Policy'),
+                                  content: SingleChildScrollView(
+                                    child: Text(privacyPolicyText),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(),
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
                           );
                         },
                         child: const Text(
@@ -279,13 +282,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         final isConnected = await _checkInternetConnection();
                         if (isConnected) {
                           if (checkboxValue) {
-                            // Checkbox is checked, proceed with login
                             _login();
                           } else {
-                            // Checkbox is not checked, show an error message
                             setState(() {
                               checkboxError =
-                                  true; // Set the checkbox error status
+                              true;
                             });
                           }
                         } else {

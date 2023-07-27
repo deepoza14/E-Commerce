@@ -1,4 +1,5 @@
 import 'package:ecommerce/database/address_database.dart';
+import 'package:ecommerce/screens/homepage.dart';
 import 'package:ecommerce/theme/color_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -407,7 +408,10 @@ class _AddNewAddressState extends State<AddNewAddress> {
 
     await AddressDatabase.insertAddress(address);
 
-    Navigator.pop(context);
+    if (context.mounted) {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const Homepage()));
+    }
   }
 }
 // Show a snackbar or navigate to a different screen to indicate successful address addition

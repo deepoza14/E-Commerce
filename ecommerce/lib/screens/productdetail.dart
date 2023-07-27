@@ -2,6 +2,7 @@ import 'package:ecommerce/database/cart_database.dart';
 import 'package:ecommerce/model/product_model.dart';
 import 'package:ecommerce/screens/cart.dart';
 import 'package:ecommerce/screens/homepage.dart';
+import 'package:ecommerce/screens/wishlist.dart';
 
 import 'package:ecommerce/theme/color_theme.dart';
 import 'package:ecommerce/theme/textstyle.dart';
@@ -125,7 +126,7 @@ class ProductDetailsState extends State<ProductDetails> {
           ),
         ),
         actions: [
-          /* IconButton(
+          IconButton(
               onPressed: () {
                 Navigator.push(
                   context,
@@ -134,7 +135,7 @@ class ProductDetailsState extends State<ProductDetails> {
                 );
               },
               icon: const Icon(Icons.favorite),
-              color: MyColorTheme.primaryColor),*/
+              color: MyColorTheme.whiteColor),
           Stack(
             children: [
               IconButton(
@@ -224,7 +225,7 @@ class ProductDetailsState extends State<ProductDetails> {
                 child: Text(
                   widget.product.title,
                   style: editTextStyle(
-                      fontSize: 24,
+                      fontSize: 20,
                       fontWeight: FontWeight.w600,
                       color: Colors.black),
                 ),

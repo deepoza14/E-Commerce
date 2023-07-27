@@ -1,6 +1,5 @@
-
 import 'package:ecommerce/database/address_database.dart';
-import 'package:ecommerce/screens/savedaddress.dart';
+import 'package:ecommerce/screens/homepage.dart';
 import 'package:ecommerce/theme/color_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -35,14 +34,20 @@ class _UpdateAddressState extends State<UpdateAddress> {
 
   void initializeFields() {
     addressType = widget.address[AddressDatabase.columnAddressType] ?? "HOME";
-    addressNameController.text = widget.address[AddressDatabase.columnAddressName] ?? "";
-    fullNameController.text = widget.address[AddressDatabase.columnFullName] ?? "";
-    flatBuildingController.text = widget.address[AddressDatabase.columnFlatBuilding] ?? "";
-    landmarkController.text = widget.address[AddressDatabase.columnLandmark] ?? "";
+    addressNameController.text =
+        widget.address[AddressDatabase.columnAddressName] ?? "";
+    fullNameController.text =
+        widget.address[AddressDatabase.columnFullName] ?? "";
+    flatBuildingController.text =
+        widget.address[AddressDatabase.columnFlatBuilding] ?? "";
+    landmarkController.text =
+        widget.address[AddressDatabase.columnLandmark] ?? "";
     stateController.text = widget.address[AddressDatabase.columnState] ?? "";
     cityController.text = widget.address[AddressDatabase.columnCity] ?? "";
-    pincodeController.text = widget.address[AddressDatabase.columnPincode] ?? "";
-    alternateMobileController.text = widget.address[AddressDatabase.columnAlternateMobile] ?? "";
+    pincodeController.text =
+        widget.address[AddressDatabase.columnPincode] ?? "";
+    alternateMobileController.text =
+        widget.address[AddressDatabase.columnAlternateMobile] ?? "";
   }
 
   @override
@@ -61,7 +66,10 @@ class _UpdateAddressState extends State<UpdateAddress> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: MyColorTheme.background,
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: MyColorTheme.background,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -415,9 +423,12 @@ class _UpdateAddressState extends State<UpdateAddress> {
       AddressDatabase.columnAlternateMobile: alternateMobileController.text,
     };
 
-    await AddressDatabase.updateAddress(widget.address[AddressDatabase.columnId], updatedAddress);
+    await AddressDatabase.updateAddress(
+        widget.address[AddressDatabase.columnId], updatedAddress);
 
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const SavedAddress()));
+    if (context.mounted) {
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const Homepage()));
+    }
   }
 }

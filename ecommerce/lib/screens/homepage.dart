@@ -1,5 +1,5 @@
+import 'package:ecommerce/alert_dialog/failedalert.dart';
 import 'package:ecommerce/bottomsheet/sortbottomsheet.dart';
-import 'package:ecommerce/database/wishlist_database.dart';
 import 'package:ecommerce/model/product_model.dart';
 import 'package:ecommerce/screens/cart.dart';
 import 'package:ecommerce/screens/productdetail.dart';
@@ -19,7 +19,6 @@ class _HomepageState extends State<Homepage> {
   List<Product> getProducts = [];
   String baseUrl = "https://fakestoreapi.com/products";
   int selectedRowIndex = -1; // Add the selectedRowIndex variable here
-  List<bool> isFavoriteList = [];
   TextEditingController searchController = TextEditingController();
   bool isLoading = true; // Add a loading indicator variable
 
@@ -27,19 +26,8 @@ class _HomepageState extends State<Homepage> {
   void initState() {
     super.initState();
     getProductsFromApi();
-    initFavoriteStatus();
   }
 
-  void initFavoriteStatus() async {
-    List<Map<String, dynamic>> wishlistItems =
-        await WishlistDatabase.getWishlistItems();
-    setState(() {
-      isFavoriteList = List<bool>.generate(
-          getProducts.length,
-          (index) => wishlistItems.any((item) =>
-              item[WishlistDatabase.columnTitle] == getProducts[index].title));
-    });
-  }
 
   void performSearch(String query) {
     setState(() {
@@ -57,34 +45,6 @@ class _HomepageState extends State<Homepage> {
     });
   }
 
-  void toggleFavorite(int index) async {
-    if (isFavoriteList[index]) {
-      // Product is in Wishlist, so remove it
-      await WishlistDatabase.removeFromWishlist(getProducts[index].title);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Removed from wishlist'),
-        ),
-      );
-    } else {
-      // Product is not in Wishlist, so add it
-      await WishlistDatabase.addToWishlist(
-        title: getProducts[index].title,
-        image: getProducts[index].image,
-        price: getProducts[index].price.toString(),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Added to wishlist'),
-        ),
-      );
-    }
-
-    setState(() {
-      // Toggle the favorite status for the product
-      isFavoriteList[index] = !isFavoriteList[index];
-    });
-  }
 
   void onRowTapped(int index) {
     setState(() {
@@ -134,23 +94,34 @@ class _HomepageState extends State<Homepage> {
       if (response.statusCode == 200) {
         if (mounted) {
           setState(() {
-          getProducts = productFromJson(response.body);
-          isFavoriteList = List<bool>.filled(getProducts.length, false);
-          isLoading = false;
-        });
+            getProducts = productFromJson(response.body);
+            isLoading = false;
+          });
         }
       } else {
         if (mounted) {
           setState(() {
-          isLoading = false;
-        });
+            isLoading = false;
+          });
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const FailedAlertDialog();
+            },
+          );
         }
       }
     } catch (e) {
       if (mounted) {
         setState(() {
-        isLoading = false;
-      });
+          isLoading = false;
+        });
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return const FailedAlertDialog();
+          },
+        );
       }
     }
   }
@@ -264,75 +235,62 @@ class _HomepageState extends State<Homepage> {
                             ),
                           );
                         },
-                        child: Column(
+                        child: Row(
                           children: [
-                            Row(
-                              children: [
-                                Image.network(
-                                  product.image,
-                                  fit: BoxFit.contain,
-                                  height: 135,
-                                  width: 135,
-                                ),
-                                Column(
-                                  children: [
-                                    Container(
-                                      width: 235,
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10),
-                                      child: Text(
-                                        product.title,
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                        maxLines: 2,
+                            Image.network(
+                              product.image,
+                              fit: BoxFit.contain,
+                              height: 135,
+                              width: 135,
+                            ),
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 235,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: Text(
+                                      product.title,
+                                      style: const TextStyle(
+                                        fontSize: 16,
                                       ),
-                                    ),
-                                    Container(
-                                      width: 235,
-                                      padding: const EdgeInsets.only(
-                                          left: 10, top: 5),
-                                      child: Text(
-                                        "₹${product.price}",
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        maxLines: 2,
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 235,
-                                      padding: const EdgeInsets.only(left: 10),
-                                      child: const Text(
-                                          'Eligible for FREE Shipping'),
-                                    ),
-                                    Container(
-                                      width: 235,
-                                      padding: const EdgeInsets.only(
-                                          left: 10, top: 5),
-                                      child: const Text(
-                                        'In Stock',
-                                        style: TextStyle(
-                                          color: Colors.teal,
-                                        ),
-                                        maxLines: 2,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Expanded(
-                                  child: IconButton(
-                                    onPressed: () => toggleFavorite(index),
-                                    icon: Icon(
-                                      isFavoriteList[index]
-                                          ? Icons.favorite
-                                          : Icons.favorite_border,
-                                      color: MyColorTheme.primaryColor,
+                                      maxLines: 2,
                                     ),
                                   ),
-                                )
-                              ],
+                                  Container(
+                                    width: 235,
+                                    padding: const EdgeInsets.only(
+                                        left: 10, top: 5),
+                                    child: Text(
+                                      "₹${product.price}",
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      maxLines: 2,
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 235,
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: const Text(
+                                        'Eligible for FREE Shipping'),
+                                  ),
+                                  Container(
+                                    width: 235,
+                                    padding: const EdgeInsets.only(
+                                        left: 10, top: 5),
+                                    child: const Text(
+                                      'In Stock',
+                                      style: TextStyle(
+                                        color: Colors.teal,
+                                      ),
+                                      maxLines: 2,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
