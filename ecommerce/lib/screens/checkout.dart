@@ -43,7 +43,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   void payment() async {
     double amount = total * 100;
     var options = {
-      'key': "rzp_test_cy6Y8H27J6FqrZ",
+      'key': "Add Your Key",
       'amount': amount,
       'currency': 'INR',
       'name': 'eCommerce.',
